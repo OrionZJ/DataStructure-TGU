@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #define INITSIZE 100
 #define INCREMENT 10
 typedef int Datatype;
