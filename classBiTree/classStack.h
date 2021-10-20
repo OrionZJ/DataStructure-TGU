@@ -2,7 +2,7 @@
 using namespace std;
 #define INITSIZE 100
 #define INCREMENT 10
-typedef int Datatype;
+typedef char Datatype;
 
 class Stack
 {
@@ -99,7 +99,7 @@ void Stack::showMenu()
 bool Stack::test(Stack testStack)
 {
     int instruction;
-    int data;
+    Datatype data;
     testStack.showMenu();
     while (cin >> instruction)
     {
