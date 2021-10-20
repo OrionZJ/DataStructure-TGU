@@ -11,6 +11,7 @@ public:
     void showMenu();
     bool push(Datatype data);
     bool pop(Datatype &data);
+    bool getTop(Stack S,Datatype &data);
 
     bool empty();
     bool full();
@@ -64,6 +65,13 @@ bool Stack::pop(Datatype &data)
     }
     _top--;
     data=*_top;
+    return true;
+}
+
+bool Stack::getTop(Stack S,Datatype &data)
+{
+    if(S.empty()) return false;
+    data=*(S._top-1);
     return true;
 }
 
