@@ -75,7 +75,7 @@ bool Stack::empty()
 
 bool Stack::full()
 {
-    if(_top-_base>_StackSize) return true;
+    if(_top-_base>=_StackSize) return true;
     else return false;
 }
 
