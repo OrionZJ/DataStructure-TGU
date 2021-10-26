@@ -1,4 +1,4 @@
-//头文件栈有待修改传值类型，中序遍历有待检验
+//头文件栈使用Class Template以满足程序出入栈需要
 #include <bits/stdc++.h>
 #include "classStack.h"
 using namespace std;
