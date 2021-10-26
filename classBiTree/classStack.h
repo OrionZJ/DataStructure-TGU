@@ -1,17 +1,16 @@
-#include <bits/stdc++.h>
 using namespace std;
 #define INITSIZE 100
 #define INCREMENT 10
-typedef char Datatype;
 
+template <class ElemType>
 class Stack
 {
 public:
     Stack();
     void showMenu();
-    bool push(Datatype data);
-    bool pop(Datatype &data);
-    bool getTop(Stack S,Datatype &data);
+    bool push(ElemType data);
+    bool pop(ElemType &data);
+    bool getTop(Stack S,ElemType &data);
 
     bool empty();
     bool full();
@@ -19,15 +18,16 @@ public:
     ~Stack();
 
 private:
-    Datatype *_base;
-    Datatype *_top;
+    ElemType *_base;
+    ElemType *_top;
     int _StackSize;
 };
 
-Stack::Stack()    //构造函数初始化栈
+template <class ElemType>
+Stack<ElemType>::Stack()    //构造函数初始化栈
 {
-    cout << "initializing...\n";
-    _base=new Datatype[INITSIZE];
+    // cout << "initializing...\n";
+    _base=new ElemType[INITSIZE];
     if(!_base)
     {
         cerr << "Error! Can't initialize stack.\n";
@@ -37,16 +37,18 @@ Stack::Stack()    //构造函数初始化栈
     _StackSize=INITSIZE;
 }
 
-Stack::~Stack()     //析构函数清空栈
+template <class ElemType>
+Stack<ElemType>::~Stack()     //析构函数清空栈
 {
     if(empty()) delete []_base;
 }
 
-bool Stack::push(Datatype data)
+template <class ElemType>
+bool Stack<ElemType>::push(ElemType data)
 {
     if(full())
     {
-        Datatype *newbase=new Datatype[INITSIZE+INCREMENT];
+        ElemType *newbase=new ElemType[INITSIZE+INCREMENT];
         delete []_base;
         _base=newbase;
         _StackSize+=INCREMENT;
@@ -56,7 +58,8 @@ bool Stack::push(Datatype data)
     return true;
 }
 
-bool Stack::pop(Datatype &data)
+template <class ElemType>
+bool Stack<ElemType>::pop(ElemType &data)
 {
     if(empty())
     {
@@ -68,26 +71,30 @@ bool Stack::pop(Datatype &data)
     return true;
 }
 
-bool Stack::getTop(Stack S,Datatype &data)
+template <class ElemType>
+bool Stack<ElemType>::getTop(Stack S,ElemType &data)
 {
     if(S.empty()) return false;
     data=*(S._top-1);
     return true;
 }
 
-bool Stack::empty()
+template <class ElemType>
+bool Stack<ElemType>::empty()
 {
     if(_top==_base) return true;
     else return false;
 }
 
-bool Stack::full()
+template <class ElemType>
+bool Stack<ElemType>::full()
 {
-    if(_top-_base>_StackSize) return true;
+    if(_top-_base>=_StackSize) return true;
     else return false;
 }
 
-void Stack::showMenu()
+template <class ElemType>
+void Stack<ElemType>::showMenu()
 {
     cout << "1.Push in data to the stack.\n"
          << "2.Pop out data to the stack.\n"
@@ -96,10 +103,11 @@ void Stack::showMenu()
          << "Please enter your choise:";
 }
 
-bool Stack::test(Stack testStack)
+template <class ElemType>
+bool Stack<ElemType>::test(Stack testStack)
 {
     int instruction;
-    Datatype data;
+    ElemType data;
     testStack.showMenu();
     while (cin >> instruction)
     {
@@ -124,10 +132,3 @@ bool Stack::test(Stack testStack)
     }
     return true;
 }
-
-// int main()
-// {
-//     Stack s;
-//     s.test(s);
-//     return 0;
-// }
