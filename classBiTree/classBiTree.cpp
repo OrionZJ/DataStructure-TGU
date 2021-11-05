@@ -16,9 +16,11 @@ public:
     biTree _root;
     bool createBiTNode(biTree &node);   //先序读入，若无子树则输入' '（空格）
     bool printElem(biTree t);   //因为使用了C++类的概念，既可直接使用类中的prinElem函数，也可通过函数指针visit调用
-    bool preOrderTraverse(biTree t,bool (BiTree::*visit)(biTree t));    //先序遍历
-    bool inOrderTraverse_1(biTree t,bool (BiTree::*visit)(biTree t));   //中序遍历_1
-    bool inOrderTraverse_2(biTree t,bool (BiTree::*visit)(biTree t));   //中序遍历_2
+    bool preOrderTraverse_1(biTree t,bool (BiTree::*visit)(biTree t));    //先序递归遍历
+    bool preOrderTraverse_2(biTree t,bool (BiTree::*visit)(biTree t));    //先序递归遍历
+    bool inOrderTraverse_1(biTree t,bool (BiTree::*visit)(biTree t));   //中序非递归实现遍历_1
+    bool inOrderTraverse_2(biTree t,bool (BiTree::*visit)(biTree t));   //中序非递归实现遍历_2
+    bool postOrderTraverse(biTree t,bool (BiTree::*visit)(biTree t));
 };
 
 bool BiTree::printElem(biTree t)    //空指针则返回false
@@ -41,12 +43,12 @@ bool BiTree::createBiTNode(biTree &node)    //先序读入，若无子树则输�
     return true;
 }
 
-bool BiTree::preOrderTraverse(biTree t,bool (BiTree::*visit)(biTree t))
+bool BiTree::preOrderTraverse_1(biTree t,bool (BiTree::*visit)(biTree t))
 {
     if(t){      //本层嵌套为必须的，否则无法访问右子树
         if(printElem(t)){
-            if(preOrderTraverse(t->_lchild,printElem)){
-                if(preOrderTraverse(t->_rchild,printElem)){
+            if(preOrderTraverse_1(t->_lchild,printElem)){
+                if(preOrderTraverse_1(t->_rchild,printElem)){
                     return true;
                 }
             }
@@ -54,6 +56,15 @@ bool BiTree::preOrderTraverse(biTree t,bool (BiTree::*visit)(biTree t))
         return false;
     }
     else return true;
+}
+
+bool BiTree::preOrderTraverse_2(biTree t,bool (BiTree::*visit)(biTree t))
+{
+    if(!t) return false;
+    printElem(t);
+    preOrderTraverse_2(t->_lchild,printElem);
+    preOrderTraverse_2(t->_rchild,printElem);
+    return true;
 }
 
 bool BiTree::inOrderTraverse_1(biTree t,bool (BiTree::*visit)(biTree t))
@@ -92,16 +103,29 @@ bool BiTree::inOrderTraverse_2(biTree t,bool (BiTree::*visit)(biTree t))
     return true;
 }
 
+bool BiTree::postOrderTraverse(biTree t,bool (BiTree::*visit)(biTree t))
+{
+    if(!t) return false;
+    postOrderTraverse(t->_lchild,visit);
+    postOrderTraverse(t->_rchild,visit);
+    printElem(t);
+    return true;
+}
+
 bool test(BiTree biTree)
 {
     cout << "Create BiTree:[abc--de-g--f---]";
     biTree.createBiTNode(biTree._root);
-    cout << "preOrderTraverse:\n";
-    biTree.preOrderTraverse(biTree._root,BiTree::printElem);
+    cout << "preOrderTraverse_1:\n";
+    biTree.preOrderTraverse_1(biTree._root,BiTree::printElem);
+    cout << "preOrderTraverse_2:\n";
+    biTree.preOrderTraverse_2(biTree._root,BiTree::printElem);
     cout << "inOrderTraverse_1:\n";
     biTree.inOrderTraverse_1(biTree._root,BiTree::printElem);
     cout << "inOrderTraverse_2:\n";
     biTree.inOrderTraverse_2(biTree._root,BiTree::printElem);
+    cout << "postOrderTraverse_2:\n";
+    biTree.postOrderTraverse(biTree._root,BiTree::printElem);
     return true;
 }
 
@@ -109,6 +133,5 @@ int main(void)
 {
     BiTree biTree;
     test(biTree);
-    system("pause");
     return 0;
 }
