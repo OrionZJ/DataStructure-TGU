@@ -15,7 +15,7 @@ To preserve some data structure I wrote.
 
 - **数据项** 是数据的不可分割的最小单位
 
-# 数据逻辑结构的分类
+## 数据逻辑结构的分类
 
 **两空** 
 
@@ -379,7 +379,25 @@ https://blog.csdn.net/lisonglisonglisong/article/details/45543451
     <img src="README.assets/20150507001759702.png" alt="img" style="zoom: 67%;" />
 
     ```c++
-    
+    bool TopologicalSort(ALGraph G) {
+        FindInDegree(G, indegree);    //对各顶点求入度
+        InitStack(S);
+        for (int i = 0; i < G.vexnum; i++) {    //建零入度顶点栈
+            if (!indegree[i]) Push(S, i);    //入度为零者进栈
+        }
+        int count = 0;
+        while (!StackEmpty(S)) {
+            Pop(s, i);    //输出i号顶点并计数
+            printf(i, G.vertices[i].data);
+            count++;
+            for (p = G.vertices[i].firstarc; p; p = p->nextarc) {
+                k = p->adjvex;    //i号顶点的每个邻接顶点入度减1
+                if (!(--indegree[k])) Push(S, K);    //入度减为0则入栈
+            }
+        }
+        if (count < G.vexnum) return false;    //该有向图有回路
+        else return true;
+    }
     ```
 
 
@@ -389,6 +407,24 @@ https://blog.csdn.net/lisonglisonglisong/article/details/45543451
 ### AOE-网
 
 > 顶点表示事件，弧表示活动，权表示活动持续时间的，边表示活动的网
+
+- “事件(顶点)” 的 最早发生时间 ve(j)
+
+  1. Max{ve(i) + dut(<i, j>)}
+  2. 最早：前序工程一旦都完成，马上开干
+- “事件(顶点)” 的 最迟发生时间 vl(k)
+
+  1. Min{vl(j) - dut(<i, j>)}
+  2. 最迟：再不开干，会耽搁后续工程工期
+- “活动(弧)” 的 最早开始时间 e(j)
+    - e(i) = ve(j)
+
+- “活动(弧)” 的 最迟开始时间 l(k)
+    - l(i) = vl(k) - dut(<j, k>)
+
+- 完成第i项活动的时间余量:  l(i)－ e(i) 
+
+> “关键活动”必为：**l(i)－e(i) = 0**，即 e(i) = l(i) 的活动。
 
 # 第九章 查找 
 
