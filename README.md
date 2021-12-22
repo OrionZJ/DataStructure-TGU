@@ -1,4 +1,7 @@
+
+
 #  DataStructure-learning
+
 To preserve some data structure I wrote.
 
 # 知识点整理
@@ -48,6 +51,31 @@ To preserve some data structure I wrote.
 
 >n个数据元素的有限序列。
 
+线性表：
+
+```c++
+typedef struct Sqlist {
+    ElemType *e;    //存储基地址
+    int length;    //表的使用长度
+    int listSize;    //表分配的存储空间大小
+} SqList；
+```
+
+分配地址：
+
+```c++
+e = (ElemType *)malloc(listSize*sizeof(ElemType));
+```
+
+单链表：
+
+```c++
+typedef struct LNode {
+    ElemType e;
+    struct Lnode *next;
+} LNode, *LinkList;
+```
+
 ## 非空循环单链表的特点
 
 >无须增加存储量，仅对表的链接方式稍作改变，即可使得表处理更加方便灵活。
@@ -76,7 +104,14 @@ To preserve some data structure I wrote.
 
 ## 双向循环链表插入结点操作
 
-
+```c++
+// 若p指向插入位置的前一个元素
+struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->pre = p;
+newNode->next = p->next;
+p->next->pre = newNode;
+p->next = newNode;
+```
 
 ## 合并有序链表
 
@@ -144,6 +179,14 @@ Q.front = (Q.front + 1) % MAXQSIZE
 
 ## 给出front、rear指针，操作求值
 
+## 常考题型
+
+5. 一个栈的进栈序列是**a**，**b**，**c**，**d**，**e**，则栈的不可能的输出序列是（  D  )
+
+       **A.abcde           B.edcba**
+        
+       **C.decba           D.dceab**
+
 
 # 第四章  串
 
@@ -157,6 +200,8 @@ Q.front = (Q.front + 1) % MAXQSIZE
 
 >零个字符的串称为**空串**，它的长度为零
 
+> 有一个或多个空格组成的串称为**空格串**，他的长度为串中空格字符的个数
+
 ## 了解串的模式识别算法
 
 > KMP算法－－最长相等前后缀
@@ -165,15 +210,61 @@ Q.front = (Q.front + 1) % MAXQSIZE
 
 ## 数组和广义表的定义
 
-## 二维数组按行（列）优先地址的计算
+## 二维数组地址的计算
 
-```
+按行优先：
+
+$$
 LOC(i, j) = LOC(0, 0) + (b2 * i + j)L
-```
+$$
 
-## 上三角矩阵按列（行）优先存放地址的计算
+按列优先：
+
+$$
+LOC(i, j) = LOC(0, 0) + (b2 * j + i)L
+$$
+
+
+
+## 三角矩阵按列（行）优先存放地址的计算
+
+- 对称矩阵
+
+    <img src="README.assets/image-20211222195757208.png" alt="image-20211222195757208" style="zoom:67%;" />	
+
+    1. 以行序为主序存储下三角阵
+        $$
+        k=\begin{cases}
+        i(i - 1) / 2 + j - 1 & i >= j \\
+        j(j - 1) / 2 + i - 1 & i < j 
+        \end{cases}
+        $$
+        
+
+        
+2. 以列序为主序存储上三角阵	
+    
+    |  a11  | a12  | a22  | a13  | a23  | ...... |   a1n    | ...... |    ann     |
+        | :---: | :--: | :--: | :--: | :--: | :----: | :------: | :----: | :--------: |
+        | k = 0 |  1   |  2   |  3   |  4   |        | n(n-1)/2 |        | n(n+1)/2-1 |
+        
+        
+        $$
+        k=\begin{cases}
+        j(j - 1) / 2 + i - 1 & i <= j \\
+        i(i - 1) / 2 + j - 1 & i > j 
+        \end{cases}
+        $$
 
 ## 广义表的定义及求表头、表尾操作
+
+$$
+LS = (a_1, a_2, ···, a_n)
+$$
+
+> $$a_i$$可以是单个元素，也可以是广义表，分别称为广义表LS的**原子**和**子表**
+
+> 当广义表非空时，称第一个元素a1为LS的**表头**，称其余元素组成的表（a2, a3, ···, an）是LS的**表尾**
 
 
 # 第六章 树和二叉树  
@@ -712,5 +803,16 @@ void BinInsertSort(vector<int> &vi) {
     - 快速排序、堆排序和希尔排序是不稳定的排序方法。
     - 一般来说，采用相邻比较的排序方法都是稳定的排序方法。
 
-
 <img src="README.assets/image-20211222105830815.png" alt="image-20211222105830815" style="zoom:80%;" />
+
+
+
+# 重点算法
+
+## 二分查找
+
+## 二叉树中序非递归遍历
+
+## 有序单链表合并
+
+## 拓扑排序
