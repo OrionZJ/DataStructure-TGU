@@ -427,6 +427,8 @@ A：叶子的度数为0；那么设叶子数为x，则此树的总分叉数为$$
 
 <img src="README.assets/image-20211223121035377.png" alt="image-20211223121035377" style="zoom: 67%;" />
 
+<img src="README.assets/image-20211223232506630.png" alt="image-20211223232506630" style="zoom: 50%;" />
+
 
 
 #   第七章 图    
